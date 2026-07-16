@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cockpit-base: #000080;
+  --color-cockpit-glass: #191970;
+  --color-hud-glow: #00CED1;
+  --color-hud-glow-soft: #40E0D0;
+  --color-hud-text: #F0F8FF;
+  --color-glacier-base: #B0E0E6;
+  --color-glacier-glass: #F0F8FF;
+  --color-telematic-accent: #4682B4;
+  --color-telematic-text: #191970;
+  --color-status-overdue: #DC143C;
+  --color-status-soon: #FFD700;
+  --color-status-ok: #32CD32;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
