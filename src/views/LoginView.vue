@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
 
+const router = useRouter()
 const authStore = useAuthStore()
 
 const email = ref('')
@@ -9,22 +11,23 @@ const password = ref('')
 const errorMessage = ref('')
 
 async function handleSubmit() {
-    errorMessage.value = ''
+  errorMessage.value = ''
 
-    if (!email.value || !password.value) {
-        errorMessage.value = 'Bitte E-Mail und Passwort eingeben.'
-        return
-    }
+  if (!email.value || !password.value) {
+    errorMessage.value = 'Bitte E-Mail und Passwort eingeben.'
+    return
+  }
 
-    const result = await authStore.loginWithCredentials(email.value, password.value)
+  const result = await authStore.loginWithCredentials(email.value, password.value)
 
-    if (!result.success) {
-        errorMessage.value = result.message
-        return
-    }
+  if (!result.success) {
+    errorMessage.value = result.message
+    return
+  }
+
+  router.push('/home')
 }
 </script>
-
 <template>
 <div class="login-page p-8">
     <h1 class="text-xl mb-4">Willkommen zurück!</h1>
