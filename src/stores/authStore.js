@@ -30,11 +30,31 @@ export const useAuthStore = defineStore('auth', () => {
     return { success: true }
   }
 
+  async function initAuth() {
+    const { data } = await supabase.auth.getSession()
+
+    if (!data.session) {
+      return
+    }
+
+    user.value = data.session.user
+
+    const { data: employeeData, error: employeeError } = await supabase
+      .from('employees')
+      .select('role')
+      .eq('email', data.session.user.email)
+      .single()
+
+    if (!employeeError) {
+      role.value = employeeData.role
+    }
+  }
+
   function logout() {
     supabase.auth.signOut()
     user.value = null
     role.value = null
   }
 
-  return { user, role, loginWithCredentials, logout }
+  return { user, role, loginWithCredentials, initAuth, logout }
 })
