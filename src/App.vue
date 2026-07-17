@@ -2,7 +2,5 @@
 </script>
 
 <template>
-  <div>
-    Fuhpark-Verwaltungsapp 
-  </div>
+  <router-view />
 </template>
