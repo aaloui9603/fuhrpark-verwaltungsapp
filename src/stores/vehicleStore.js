@@ -31,5 +31,34 @@ export const useVehicleStore = defineStore('vehicle', () => {
     return { success: true }
   }
 
-  return { vehicles, fetchVehicles, addVehicle }
-})
+
+
+async function updateVehicle(id, updates) { 
+const { error } = await supabase 
+.from('vehicles') 
+.update(updates) 
+.eq('id', id)
+
+if (error) { 
+return { success: false, message: error.message }
+}
+
+await fetchVehicles() 
+return { success: true } 
+}
+
+async function deleteVehicle(id) { 
+const { error } = await supabase 
+.from ('vehicles') 
+.delete() 
+.eq('id', id)
+
+if (error) { 
+return { success: false, message: error.message }
+}
+
+await fetchVehicles() 
+return { success: true } 
+}
+
+return { vehicles, fetchVehicles, addVehicle, updateVehicle, deleteVehicle } })
