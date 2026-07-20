@@ -5,6 +5,7 @@ import { supabase } from '../services/supabase'
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const role = ref(null)
+  const employeeId = ref(null)
 
   async function loginWithCredentials(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
@@ -17,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     const { data: employeeData, error: employeeError } = await supabase
       .from('employees')
-      .select('role')
+      .select('role, id')
       .eq('email', email)
       .single()
 
@@ -26,6 +27,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     role.value = employeeData.role
+    employeeId.value = employeeData.id
 
     return { success: true }
   }
@@ -41,12 +43,13 @@ export const useAuthStore = defineStore('auth', () => {
 
     const { data: employeeData, error: employeeError } = await supabase
       .from('employees')
-      .select('role')
+      .select('role, id')
       .eq('email', data.session.user.email)
       .single()
 
     if (!employeeError) {
       role.value = employeeData.role
+      employeeId.value = employeeData.id
     }
   }
 
@@ -54,7 +57,8 @@ export const useAuthStore = defineStore('auth', () => {
     supabase.auth.signOut()
     user.value = null
     role.value = null
+    employeeId.value = null
   }
 
-  return { user, role, loginWithCredentials, initAuth, logout }
+  return { user, role, employeeId, loginWithCredentials, initAuth, logout }
 })
