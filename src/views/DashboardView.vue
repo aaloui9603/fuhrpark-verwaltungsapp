@@ -1,16 +1,21 @@
+<!-- src/views/DashboardView.vue -->
 <script setup>
 import { onMounted } from 'vue'
 import { useAuthStore } from '../stores/authStore'
 import { useVehicleStore } from '../stores/vehicleStore'
+import { useBookingStore } from '../stores/bookingStore'
 import VehicleCard from '../components/VehicleCard.vue'
 import AddVehicleForm from '../components/AddVehicleForm.vue'
 import BookingForm from '../components/BookingForm.vue'
+import AvailabilityCheck from '../components/AvailabilityCheck.vue'
 
 const authStore = useAuthStore()
 const vehicleStore = useVehicleStore()
+const bookingStore = useBookingStore()
 
 onMounted(() => {
   vehicleStore.fetchVehicles()
+  bookingStore.fetchBookings()
 })
 </script>
 
@@ -23,6 +28,9 @@ onMounted(() => {
 
     <h2>Buchung anlegen</h2>
     <BookingForm />
+
+    <h2>Verfügbarkeit prüfen</h2>
+    <AvailabilityCheck />
 
     <h2>Fahrzeuge</h2>
     <VehicleCard
