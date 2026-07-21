@@ -7,6 +7,7 @@ import { useBookingStore } from '../stores/bookingStore'
 const vehicleStore = useVehicleStore()
 const authStore = useAuthStore()
 const bookingStore = useBookingStore()
+const errorMessage = ref('')
 
 const purpose = ref('')
 const start = ref('')
@@ -22,24 +23,28 @@ const duration = computed(() => {
 })
 
 async function handleSubmit() {
+  errorMessage.value = ''
   const result = await bookingStore.createBooking({
     vehicle_id: selectedVehicleId.value,
     employee_id: authStore.employeeId,
-    start: start.value,
-    end_date: end.value,
+    start: new Date(start.value).toISOString(),
+    end_date: new Date(end.value).toISOString(),
     purpose: purpose.value
   })
-
   if (result.success) {
     selectedVehicleId.value = ''
     start.value = ''
     end.value = ''
     purpose.value = ''
+
+  } else {
+    errorMessage.value = result.message
   }
 }
 </script>
 
 <template>
+<p v-if="errorMessage" class="error text-red-600">{{ errorMessage }}</p>
   <form @submit.prevent="handleSubmit">
     <label for="vehicle">Fahrzeug</label>
     <select id="vehicle" v-model="selectedVehicleId">
@@ -47,7 +52,6 @@ async function handleSubmit() {
         {{ v.make_model }} — {{ v.color }} - {{ v.licence_plate }}
       </option>
     </select>
-
     <label for="start">Start</label>
     <input id="start" type="datetime-local" v-model="start" />
 
