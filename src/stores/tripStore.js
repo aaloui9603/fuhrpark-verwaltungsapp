@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { supabase } from '../services/supabase'
 import { useBookingStore } from './bookingStore'
+import { ref } from 'vue'
 
 export const useTripStore = defineStore('trip', () => {
   const bookingStore = useBookingStore()
@@ -26,5 +27,21 @@ export const useTripStore = defineStore('trip', () => {
     return { success: true, message: 'Trip erfolgreich erfasst.' }
   }
 
-  return { createTrip }
+  const trips = ref([])
+
+async function fetchTripsForVehicle(vehicleId) {
+  const { data, error } = await supabase
+    .from('trips')
+    .select('*, bookings(vehicle_id)')
+    .eq('bookings.vehicle_id', vehicleId)
+    .order('date', { ascending: false })
+
+  if (error) {
+    console.error('Historie konnte nicht geladen werden:', error.message)
+    return
+  }
+
+  trips.value = data
+}
+  return { createTrip, trips, fetchTripsForVehicle }
 })

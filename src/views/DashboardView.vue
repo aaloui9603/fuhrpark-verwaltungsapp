@@ -10,6 +10,7 @@ import AvailabilityCheck from '../components/AvailabilityCheck.vue'
 import BookingCalendar from '../components/BookingCalendar.vue'
 
 
+
 const authStore = useAuthStore()
 const vehicleStore = useVehicleStore()
 const bookingStore = useBookingStore()
@@ -43,6 +44,5 @@ onMounted(() => {
       :vehicle="v"
       @delete="vehicleStore.deleteVehicle($event)"
     />
-  
   </div>
 </template>
