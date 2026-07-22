@@ -63,5 +63,10 @@ export const useBookingStore = defineStore('booking', () => {
     return { success: true }
   }
 
-  return { bookings, fetchBookings, createBooking }
+  function isBookingConfirmed(bookingId) {
+    const booking = bookings.value.find(b => b.id === bookingId)
+    return booking?.status === 'confirmed'
+  }
+
+  return { bookings, fetchBookings, hasBookingConflict, createBooking, isBookingConfirmed }
 })
