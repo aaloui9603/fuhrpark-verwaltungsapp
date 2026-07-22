@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/authStore'
 import { useVehicleStore } from '../stores/vehicleStore'
+import StatusAmpel from './StatusAmpel.vue'
 
 const props = defineProps({
   vehicle: {
@@ -19,6 +20,16 @@ const inspectionDate = ref(props.vehicle.inspection_date)
 async function saveInspectionDate() {
   await vehicleStore.updateVehicle(props.vehicle.id, { inspection_date: inspectionDate.value})
 }
+
+const daysUntilInspection = computed(() => {
+  if (!props.vehicle.inspection_date) {
+    return null
+  }
+  const today = new Date()
+  const inspection = new Date(props.vehicle.inspection_date)
+  const diffMs = inspection - today
+  return Math.floor(diffMs / (1000 * 60 * 60 * 24))
+})
 </script>
 
 <template>
@@ -32,6 +43,7 @@ async function saveInspectionDate() {
       <button @click="saveInspectionDate">Speichern</button>
       <button @click="$emit('edit', vehicle)">Bearbeiten</button>
       <button @click="$emit('delete', vehicle.id)">Löschen</button>
+      <StatusAmpel :days="daysUntilInspection" />
     </div>
   </div>
 </template>
