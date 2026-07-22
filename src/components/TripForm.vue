@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useTripStore } from '../stores/tripStore.js'
 
 
@@ -12,7 +12,16 @@ const date = ref('')
 const feedback = ref('')
 
 
+const distance = computed(() => { 
+return kmEnd.value - kmStart.value
+})
+
 async function handleSubmit() {
+if (kmEnd.value < kmStart.value) {
+feedback.value = 'km Ende darf nicht kleiner  als km Start sein.'
+return
+}
+
 const result = await tripStore.createTrip(props.bookingId, kmStart.value, kmEnd.value, date.value)
 feedback.value = result.message
 }
@@ -26,6 +35,7 @@ feedback.value = result.message
 <input v-model="date" type="date" />
 <button type="submit">Trip erfassen</button>
 <p v-if="feedback"> {{ feedback }}</p>
+<p>Gefahrene Strecke: {{ distance }} km</p>
 </form>
 
 </template>
