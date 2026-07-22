@@ -1,3 +1,4 @@
+```vue
 <script setup>
 import { ref, computed } from 'vue'
 import { useVehicleStore } from '../stores/vehicleStore'
@@ -8,6 +9,7 @@ const vehicleStore = useVehicleStore()
 const authStore = useAuthStore()
 const bookingStore = useBookingStore()
 const errorMessage = ref('')
+const tripType = ref('business')
 
 const purpose = ref('')
 const start = ref('')
@@ -29,13 +31,16 @@ async function handleSubmit() {
     employee_id: authStore.employeeId,
     start: new Date(start.value).toISOString(),
     end_date: new Date(end.value).toISOString(),
-    purpose: purpose.value
+    purpose: purpose.value,
+    trip_type: tripType.value
   })
+  
   if (result.success) {
     selectedVehicleId.value = ''
     start.value = ''
     end.value = ''
     purpose.value = ''
+    tripType.value = 'business'
 
   } else {
     errorMessage.value = result.message
@@ -64,5 +69,11 @@ async function handleSubmit() {
     <p v-if="duration">Dauer: {{ duration }} Stunden</p>
 
     <button type="submit">Buchung anlegen</button>
+
+    <select v-model="tripType">
+      <option value="business">Dienstfahrt</option>
+      <option value="private">Privatfahrt</option>
+    </select>
   </form>
 </template>
+```
