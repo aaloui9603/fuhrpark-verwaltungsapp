@@ -15,45 +15,37 @@ const nextSevenDays = computed(() => {
 })
 
 function isBookedOn(vehicleId, day) {
-return bookingStore.bookings.some((booking) => {
-if (booking.vehicle_id !== vehicleId) return false
+  return bookingStore.bookings.some((booking) => {
+    if (booking.vehicle_id !== vehicleId) return false
 
-const bookingStart = new Date(booking.start)
-const bookingEnd = new Date(booking.end_date)
+    const bookingStart = new Date(booking.start)
+    const bookingEnd = new Date(booking.end_date)
 
-return bookingStart <= day && bookingEnd >= day })
+    return bookingStart <= day && bookingEnd >= day
+  })
 }
-
 </script>
 
 <template>
-  <div class="vehicle-grid">
+  <div class="vehicle-grid overflow-x-auto">
     <!-- Eine Zeile pro Fahrzeug (äußere Schleife) -->
     <div
       v-for="v in vehicleStore.vehicles"
       :key="v.id"
-      class="vehicle-row"
+      class="vehicle-row flex items-center gap-2"
     >
       <!-- Anzeige des Fahrzeugnamens -->
-      <div class="vehicle-name">{{ v.make_model }} — {{ v.color }}</div>
+      <div class="vehicle-name shrink-0 w-32 md:w-40">{{ v.make_model }} — {{ v.color }}</div>
 
       <!-- Eine Zelle für jeden Tag (innere Schleife) -->
       <div
         v-for="day in nextSevenDays"
         :key="day.toISOString()"
-        class="day-cell"
+        class="day-cell shrink-0 w-12 md:w-16"
+        :class="{ booked: isBookedOn(v.id, day) }"
       >
         {{ day.toLocaleDateString('de-DE', { weekday: 'short' }) }}
       </div>
-
-      <div 
-        v-for="day in nextSevenDays"
-        :key="day.toISOString()"
-        class="day-cell"
-        :class="{ booked: isBookedOn(v.id, day) }"
-      > 
-        {{ day.toLocaleDateString('de-DE', { weekday: 'short' }) }}
-    </div>
     </div>
   </div>
 </template>

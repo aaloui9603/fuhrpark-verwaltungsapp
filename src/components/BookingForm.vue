@@ -50,30 +50,41 @@ async function handleSubmit() {
 
 <template>
 <p v-if="errorMessage" class="error text-red-600">{{ errorMessage }}</p>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-4">
+    <div class="w-full">
     <label for="vehicle">Fahrzeug</label>
-    <select id="vehicle" v-model="selectedVehicleId">
+    <select id="vehicle" v-model="selectedVehicleId" class="w-full">
       <option v-for="v in vehicleStore.vehicles" :key="v.id" :value="v.id">
         {{ v.make_model }} — {{ v.color }} - {{ v.licence_plate }}
       </option>
     </select>
-    <label for="start">Start</label>
-    <input id="start" type="datetime-local" v-model="start" />
+    </div>
 
-    <label for="end">Ende</label>
-    <input id="end" type="datetime-local" v-model="end" />
+    <div class="w-full">
+      <label>Fahrtart</label>
+      <select v-model="tripType" class="w-full">
+        <option value="business">Dienstfahrt</option>
+        <option value="private">Privatfahrt</option>
+      </select>
+    </div>
 
-    <label for="purpose">Zweck</label>
-    <input id="purpose" type="text" v-model="purpose" />
+    <div class="w-full">
+      <label for="start">Start</label>
+      <input id="start" type="datetime-local" v-model="start" class="w-full" />
+    </div>
 
-    <p v-if="duration">Dauer: {{ duration }} Stunden</p>
+    <div class="w-full">
+      <label for="end">Ende</label>
+      <input id="end" type="datetime-local" v-model="end" class="w-full" />
+    </div>
 
-    <button type="submit">Buchung anlegen</button>
+    <div class="w-full md:col-span-2">
+      <label for="purpose">Zweck</label>
+      <input id="purpose" type="text" v-model="purpose" class="w-full" />
+    </div>
 
-    <select v-model="tripType">
-      <option value="business">Dienstfahrt</option>
-      <option value="private">Privatfahrt</option>
-    </select>
-  </form>
+    <p v-if="duration" class="w-full md:col-span-2">Dauer: {{ duration }} Stunden</p>
+
+    <button type="submit" class="w-full md:col-span-2">Buchung anlegen</button>
+  </form>   
 </template>
-```

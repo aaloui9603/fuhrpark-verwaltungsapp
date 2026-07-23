@@ -38,12 +38,14 @@ onMounted(async () => {
     <BookingCalendar />
 
     <h2>Fahrzeuge</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <VehicleCard
       v-for="v in vehicleStore.vehicles"
       :key="v.id"
       :vehicle="v"
       @delete="vehicleStore.deleteVehicle($event)"
     />
+    </div>
 
   </div>
 </template>

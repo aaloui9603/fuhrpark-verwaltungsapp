@@ -33,11 +33,14 @@ const daysUntilInspection = computed(() => {
 </script>
 
 <template>
-  <div class="vehicle-card">
+  <div class="vehicle-card w-full min-w-0">
     <p>{{ vehicle.make_model }} — {{ vehicle.color }}</p>
     <p>{{ vehicle.licence_plate }}</p>
 
-    <div v-if="authStore.role === 'admin' || authStore.role === 'coordinator'">
+    <div
+      v-if="authStore.role === 'admin' || authStore.role === 'coordinator'"
+      class="flex flex-wrap gap-2 items-center"
+    >
       <label>TÜV-Termin</label>
       <input type="date" v-model="inspectionDate" />
       <button @click="saveInspectionDate">Speichern</button>
