@@ -29,7 +29,7 @@ licencePlate.value = ''
 </script>
 <template>
 
-<form @submit.prevent="handleSubmit">
+<form @submit.prevent="handleSubmit" class="text-telematic-text dark:text-hud-text">
 <label for="makeModel">Marke/Modell</label>
 <input id="makeModel" v-model="makeModel" type="text" /> 
 

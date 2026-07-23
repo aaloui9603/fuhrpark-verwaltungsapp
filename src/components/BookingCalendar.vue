@@ -27,7 +27,7 @@ function isBookedOn(vehicleId, day) {
 </script>
 
 <template>
-  <div class="vehicle-grid overflow-x-auto">
+  <div class="vehicle-grid overflow-x-auto text-telematic-text dark:text-hud-text">
     <!-- Eine Zeile pro Fahrzeug (äußere Schleife) -->
     <div
       v-for="v in vehicleStore.vehicles"

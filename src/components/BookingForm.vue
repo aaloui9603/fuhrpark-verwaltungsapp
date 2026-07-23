@@ -50,7 +50,7 @@ async function handleSubmit() {
 
 <template>
 <p v-if="errorMessage" class="error text-red-600">{{ errorMessage }}</p>
-  <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-4">
+  <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-4 text-telematic-text dark:text-hud-text">
     <div class="w-full">
     <label for="vehicle">Fahrzeug</label>
     <select id="vehicle" v-model="selectedVehicleId" class="w-full">

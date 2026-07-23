@@ -33,7 +33,7 @@ const availableVehicles = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div class="text-telematic-text dark:text-hud-text">
     <label for="checkStart">Start</label>
     <input id="checkStart" type="datetime-local" v-model="start" />
 

@@ -22,7 +22,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
+  <div class="bg-glacier-base dark:bg-telematic-text min-h-screen text-telematic-text dark:text-hud-text">
     <h1>Dashboard</h1>
     <p v-if="authStore.user">{{ authStore.user.email }}</p>
 
@@ -33,19 +33,18 @@ onMounted(async () => {
 
     <h2>Verfügbarkeit prüfen</h2>
     <AvailabilityCheck />
-    
+
     <h2>Kalender</h2>
     <BookingCalendar />
 
     <h2>Fahrzeuge</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <VehicleCard
-      v-for="v in vehicleStore.vehicles"
-      :key="v.id"
-      :vehicle="v"
-      @delete="vehicleStore.deleteVehicle($event)"
-    />
+      <VehicleCard
+        v-for="v in vehicleStore.vehicles"
+        :key="v.id"
+        :vehicle="v"
+        @delete="vehicleStore.deleteVehicle($event)"
+      />
     </div>
-
   </div>
 </template>

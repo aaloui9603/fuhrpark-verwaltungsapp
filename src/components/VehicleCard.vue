@@ -33,7 +33,7 @@ const daysUntilInspection = computed(() => {
 </script>
 
 <template>
-  <div class="vehicle-card w-full min-w-0">
+  <div class="vehicle-card w-full min-w-0 bg-glacier-glass dark:bg-cockpit-glass text-telematic-text dark:text-hud-text p-4 rounded border border-telematic-accent/30 dark:border-hud-glow/30">
     <p>{{ vehicle.make_model }} — {{ vehicle.color }}</p>
     <p>{{ vehicle.licence_plate }}</p>
 
