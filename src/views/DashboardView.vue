@@ -10,13 +10,13 @@ import AvailabilityCheck from '../components/AvailabilityCheck.vue'
 import BookingCalendar from '../components/BookingCalendar.vue'
 
 
-
 const authStore = useAuthStore()
 const vehicleStore = useVehicleStore()
 const bookingStore = useBookingStore()
 
-onMounted(() => {
-  vehicleStore.fetchVehicles()
+onMounted(async () => {
+  await vehicleStore.fetchVehicles()
+  vehicleStore.checkInspectionDates()
   bookingStore.fetchBookings()
 })
 </script>
@@ -44,5 +44,6 @@ onMounted(() => {
       :vehicle="v"
       @delete="vehicleStore.deleteVehicle($event)"
     />
+
   </div>
 </template>

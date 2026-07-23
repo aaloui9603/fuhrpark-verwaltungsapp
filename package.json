@@ -3,10 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron": "electron ."
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.5",
@@ -17,7 +19,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-vue": "^6.0.7",
-    "electron": "^43.1.1",
+    "electron": "^43.2.0",
     "sass": "^1.101.0",
     "tailwindcss": "^4.3.3",
     "vite": "^8.1.1"
